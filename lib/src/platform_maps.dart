@@ -226,6 +226,7 @@ class _PlatformMapState extends State<PlatformMap> {
         trafficEnabled: widget.trafficEnabled,
         minMaxZoomPreference:
             widget.minMaxZoomPreference.appleMapsZoomPreference,
+        colorScheme: Theme.of(context).brightness == Brightness.light ? appleMaps.MapColorScheme.light : appleMaps.MapColorScheme.dark,
       );
     } else {
       return Text("Platform not yet implemented");
