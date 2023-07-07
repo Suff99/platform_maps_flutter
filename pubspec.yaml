@@ -14,7 +14,10 @@ dependencies:
 
   google_maps_flutter: ^2.0.1
   google_maps_flutter_platform_interface: ^2.0.3
-  apple_maps_flutter: ^1.0.1
+  apple_maps_flutter:
+    git:
+      url: https://github.com/muxable/apple_maps_flutter.git
+      ref: color-scheme
 
 dev_dependencies:
   flutter_test:
