@@ -170,7 +170,8 @@ class PlatformMap extends StatefulWidget {
 class _PlatformMapState extends State<PlatformMap> {
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.GoogleMap(
         initialCameraPosition:
             widget.initialCameraPosition.googleMapsCameraPosition,
@@ -199,7 +200,7 @@ class _PlatformMapState extends State<PlatformMap> {
         minMaxZoomPreference:
             widget.minMaxZoomPreference.googleMapsZoomPreference,
       );
-    } else if (Platform.isIOS) {
+    } else if (getPlatformType() == PlatformType.ios) {
       return appleMaps.AppleMap(
         initialCameraPosition:
             widget.initialCameraPosition.appleMapsCameraPosition,
@@ -226,7 +227,9 @@ class _PlatformMapState extends State<PlatformMap> {
         trafficEnabled: widget.trafficEnabled,
         minMaxZoomPreference:
             widget.minMaxZoomPreference.appleMapsZoomPreference,
-        colorScheme: Theme.of(context).brightness == Brightness.light ? appleMaps.MapColorScheme.light : appleMaps.MapColorScheme.dark,
+        colorScheme: Theme.of(context).brightness == Brightness.light
+            ? appleMaps.MapColorScheme.light
+            : appleMaps.MapColorScheme.dark,
       );
     } else {
       return Text("Platform not yet implemented");
@@ -238,37 +241,40 @@ class _PlatformMapState extends State<PlatformMap> {
   }
 
   void _onCameraMove(dynamic cameraPosition) {
-    if (Platform.isIOS) {
-      widget.onCameraMove?.call(
-        CameraPosition.fromAppleMapCameraPosition(
-          cameraPosition as appleMaps.CameraPosition,
-        ),
-      );
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       widget.onCameraMove?.call(
         CameraPosition.fromGoogleMapCameraPosition(
           cameraPosition as googleMaps.CameraPosition,
+        ),
+      );
+    } else if (getPlatformType() == PlatformType.ios) {
+      widget.onCameraMove?.call(
+        CameraPosition.fromAppleMapCameraPosition(
+          cameraPosition as appleMaps.CameraPosition,
         ),
       );
     }
   }
 
   void _onTap(dynamic position) {
-    if (Platform.isIOS) {
-      widget.onTap?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       widget.onTap
           ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
+    } else if (getPlatformType() == PlatformType.ios) {
+      widget.onTap?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
     }
   }
 
   void _onLongPress(dynamic position) {
-    if (Platform.isIOS) {
-      widget.onLongPress
-          ?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       widget.onLongPress
           ?.call(LatLng._fromGoogleLatLng(position as googleMaps.LatLng));
+    } else if (getPlatformType() == PlatformType.ios) {
+      widget.onLongPress
+          ?.call(LatLng._fromAppleLatLng(position as appleMaps.LatLng));
     }
   }
 

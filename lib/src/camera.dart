@@ -81,30 +81,33 @@ class CameraUpdate {
 
   /// Returns a camera update that moves the camera to the specified position.
   static newCameraPosition(CameraPosition cameraPosition) {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.newCameraPosition(
-          cameraPosition.appleMapsCameraPosition);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.newCameraPosition(
           cameraPosition.googleMapsCameraPosition);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.newCameraPosition(
+          cameraPosition.appleMapsCameraPosition);
     }
   }
 
   /// Returns a camera update that moves the camera target to the specified geographical location.
   static newLatLng(LatLng latLng) {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.newLatLng(latLng.appleLatLng);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.newLatLng(latLng.googleLatLng);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.newLatLng(latLng.appleLatLng);
     }
   }
 
   /// Returns a camera update that moves the camera target to the specified geographical location and zoom level.
   static newLatLngZoom(LatLng latLng, double zoom) {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.newLatLngZoom(latLng.appleLatLng, zoom);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.newLatLngZoom(latLng.googleLatLng, zoom);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.newLatLngZoom(latLng.appleLatLng, zoom);
     }
   }
 
@@ -114,12 +117,13 @@ class CameraUpdate {
   /// A non-zero [padding] insets the bounding box from the map view's edges.
   /// The camera's new tilt and bearing will both be 0.0.
   static newLatLngBounds(LatLngBounds bounds, double padding) {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.newLatLngBounds(
-          bounds.appleLatLngBounds, padding);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.newLatLngBounds(
           bounds.googleLatLngBounds, padding);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.newLatLngBounds(
+          bounds.appleLatLngBounds, padding);
     }
   }
 
@@ -127,10 +131,11 @@ class CameraUpdate {
   /// The optional [focus] is a screen point whose underlying geographical location
   /// should be invariant, if possible, by the movement.
   static zoomBy(double amount) {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.zoomBy(amount);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.zoomBy(amount);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.zoomBy(amount);
     }
   }
 
@@ -139,10 +144,11 @@ class CameraUpdate {
   ///
   /// Equivalent to the result of calling zoomBy(1.0).
   static zoomIn() {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.zoomIn();
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.zoomIn();
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.zoomIn();
     }
   }
 
@@ -151,19 +157,21 @@ class CameraUpdate {
   ///
   /// Equivalent to the result of calling zoomBy(-1.0).
   static zoomOut() {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.zoomOut();
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.zoomOut();
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.zoomOut();
     }
   }
 
   /// Returns a camera update that sets the camera zoom level.
   static zoomTo(double zoom) {
-    if (Platform.isIOS) {
-      return appleMaps.CameraUpdate.zoomTo(zoom);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleMaps.CameraUpdate.zoomTo(zoom);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return appleMaps.CameraUpdate.zoomTo(zoom);
     }
   }
 

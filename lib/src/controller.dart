@@ -21,10 +21,11 @@ class PlatformMapController {
   ///   * [hideMarkerInfoWindow] to hide the Info Window.
   ///   * [isMarkerInfoWindowShown] to check if the Info Window is showing.
   Future<void> showMarkerInfoWindow(MarkerId markerId) {
-    if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleController!
           .showMarkerInfoWindow(markerId.googleMapsMarkerId);
-    } else if (Platform.isIOS) {
+    } else if (getPlatformType() == PlatformType.ios) {
       return appleController!
           .showMarkerInfoWindow(markerId.appleMapsAnnoationId);
     }
@@ -40,10 +41,11 @@ class PlatformMapController {
   ///   * [showMarkerInfoWindow] to show the Info Window.
   ///   * [isMarkerInfoWindowShown] to check if the Info Window is showing.
   Future<void> hideMarkerInfoWindow(MarkerId markerId) {
-    if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleController!
           .hideMarkerInfoWindow(markerId.googleMapsMarkerId);
-    } else if (Platform.isIOS) {
+    } else if (getPlatformType() == PlatformType.ios) {
       return appleController!
           .hideMarkerInfoWindow(markerId.appleMapsAnnoationId);
     }
@@ -59,10 +61,11 @@ class PlatformMapController {
   ///   * [showMarkerInfoWindow] to show the Info Window.
   ///   * [hideMarkerInfoWindow] to hide the Info Window.
   Future<bool> isMarkerInfoWindowShown(MarkerId markerId) async {
-    if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return googleController!
           .isMarkerInfoWindowShown(markerId.googleMapsMarkerId);
-    } else if (Platform.isIOS) {
+    } else if (getPlatformType() == PlatformType.ios) {
       return await appleController!
               .isMarkerInfoWindowShown(markerId.appleMapsAnnoationId) ??
           false;
@@ -75,47 +78,46 @@ class PlatformMapController {
   /// The returned [Future] completes after the change has been started on the
   /// platform side.
   Future<void> animateCamera(cameraUpdate) async {
-    if (Platform.isIOS) {
-      return this.appleController!.animateCamera(cameraUpdate);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return this.googleController!.animateCamera(cameraUpdate);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return this.appleController!.animateCamera(cameraUpdate);
     }
     throw ('Platform not supported.');
   }
 
-  /// Changes the map camera position.
-  ///
-  /// The returned [Future] completes after the change has been made on the
-  /// platform side.
   Future<void> moveCamera(cameraUpdate) async {
-    if (Platform.isIOS) {
-      return this.appleController!.moveCamera(cameraUpdate);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return this.googleController!.moveCamera(cameraUpdate);
+    } else if (getPlatformType() == PlatformType.ios) {
+      return this.appleController!.moveCamera(cameraUpdate);
     }
   }
 
-  /// Return [LatLngBounds] defining the region that is visible in a map.
   Future<LatLngBounds> getVisibleRegion() async {
     late LatLngBounds _bounds;
-    if (Platform.isIOS) {
-      appleMaps.LatLngBounds appleBounds =
-          await this.appleController!.getVisibleRegion();
-      _bounds = LatLngBounds._fromAppleLatLngBounds(appleBounds);
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       googleMaps.LatLngBounds googleBounds =
           await this.googleController!.getVisibleRegion();
       _bounds = LatLngBounds._fromGoogleLatLngBounds(googleBounds);
+    } else if (getPlatformType() == PlatformType.ios) {
+      appleMaps.LatLngBounds appleBounds =
+          await this.appleController!.getVisibleRegion();
+      _bounds = LatLngBounds._fromAppleLatLngBounds(appleBounds);
     }
     return _bounds;
   }
 
-  /// Returns the image bytes of the map
   Future<Uint8List?> takeSnapshot() async {
-    if (Platform.isIOS) {
-      return this.appleController!.takeSnapshot();
-    } else if (Platform.isAndroid) {
+    if (getPlatformType() == PlatformType.web ||
+        getPlatformType() == PlatformType.android) {
       return this.googleController!.takeSnapshot();
+    } else if (getPlatformType() == PlatformType.ios) {
+      return this.appleController!.takeSnapshot();
     }
+    return null;
   }
 }
